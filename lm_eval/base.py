@@ -466,25 +466,12 @@ class Task(abc.ABC):
         else:
             if self.has_training_docs():         
                 if retrieval_method != 'random':
-                    # doc_idx = doc['doc_idx']
-                    # memory = self.read_memory(retrieval_path)
-                    # retrieval_idx = memory[doc_idx]['retrieval_idx']
-                    
                     # ToDo: make an exception for which max_sim = 0.0 -> all nearest instances have 0.0 similarity
                     try:
                         selected_idx = self.sample_retreival_idx(doc, num_fewshot, retrieval_method, retrieval_path)
                         fewshotex = self.fewshot_examples(k=num_fewshot, rnd=rnd, selected_idx=selected_idx)
                     except:
                         fewshotex = self.fewshot_examples(k=num_fewshot, rnd=rnd)
-                        
-
-                    # print('>>>> doc')
-                    # print(doc)                
-                    # print('>>>> doc_idx: {}'.format(doc_idx))                
-                    # print('>>>> retrieval_idx')
-                    # print(retrieval_idx)
-                    # print('>>>> selected_idx')
-                    # print(selected_idx)
                 else:
                     # for sets with no training docs, draw from other set *but ensure no overlap with current doc*
                     if self.has_training_docs():
